@@ -153,7 +153,6 @@ figcaption {
 .movie-modal {
     display: none;
     position: fixed;
-    z-index: 999;
     left: 0;
     top: 0;
     width: 100%;
@@ -161,10 +160,19 @@ figcaption {
     background: rgba(0, 0, 0, 0.7);
 }
 
+
+ .movie-modal.active{
+    display: block;
+}   
+
+
+.addMovieBtn{
+    display: none;
+} 
+
 .movie-modal-content {
     margin: 5% auto;
     max-width: 700px;
 }
-
 
 

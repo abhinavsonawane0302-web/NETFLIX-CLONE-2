@@ -36,7 +36,23 @@ let modaltitle = document.getElementById("modaltitle")
 
 //  localStorage.setItem("movies",JSON.stringify(moviearr))
 
+function setRating(rating) {
+    if (rating > 7) {
+        return "badge-success";
+    } else if (rating >= 4 && rating <= 7) {
+        return "badge-warning";
+    } else {
+        return "badge-danger";
+    }
+}
 
+
+
+
+function ontoggle() {
+    moviemodal.classList.toggle("active")
+    
+}
 
 
 let movies = JSON.parse(localStorage.getItem("movies")) || []
@@ -51,7 +67,7 @@ function showCard(arr) {
                          <div class="card mt-3 movieCard">
                             <div class="card-header d-flex justify-content-between">
                                 <h4 class="movieTitle">${ele.name}</h4>
-                                <h5><span class="badge badge-success">${ele.rating}</span></h5>
+                                <h5><span class="badge ${setRating(ele.rating)}">${ele.rating}</span></h5>
                             </div>
                             <div class="card-body">
                                   <figure class="py-0">
@@ -115,7 +131,7 @@ function oncreate(ele) {
                          <div class="card mt-3 movieCard">
                             <div class="card-header d-flex justify-content-between">
                                 <h4 class="movieTitle">${movieobj.name}</h4>
-                                <h5><span class="badge badge-success">${movieobj.rating}</span></h5>
+                                <h5><span class="badge ${setRating(movieobj.rating)}">${movieobj.rating}</span></h5>
                             </div>
                             <div class="card-body">
                                   <figure class="py-0">
@@ -141,7 +157,7 @@ function oncreate(ele) {
 
     movieform.reset()
 
-    moviemodal.style.display = "none"
+   ontoggle()
 
     Swal.fire({
 
@@ -158,7 +174,9 @@ function oncreate(ele) {
 
 function onedit(ele) {
     let editid = ele.getAttribute("data-edit-id")
-    editId = editid
+    
+
+
     let editobj = movies.find(e => e.id === editid)
 
     moviename.value = editobj.name
@@ -170,13 +188,11 @@ function onedit(ele) {
     Updatebtn.classList.remove("d-none")
 
 
-    moviemodal.style.display ="flex"
-
     modaltitle.innerText ="Update Movie"
 
     Updatebtn.setAttribute("data-edit-id",editid)
     
-
+    ontoggle()
 }
 
 function onupdate() {
@@ -202,8 +218,10 @@ function onupdate() {
     Updatebtn.classList.add("d-none")
     addmovie.classList.remove("d-none")
 
-    moviemodal.style.display = "none"
+
     modaltitle.innerText = "Add Movie"
+
+    ontoggle()
 
     movieform.reset()
 
@@ -251,25 +269,11 @@ function ondelete(ele){
 movieform.addEventListener("submit", oncreate)
 Updatebtn.addEventListener("click", onupdate)
 
-addMovieBtn.addEventListener("click", function () {
+addMovieBtn.addEventListener("click", ontoggle)
 
-    moviemodal.style.display = "flex"
-})
+closemodalBtn.addEventListener("click", ontoggle)
 
-closemodalBtn.addEventListener("click", function () {
-
-    moviemodal.style.display = "none"
-
-
-})
-
-Cancel.addEventListener("click", function (){
-
-    moviemodal.style.display ="none"
-
-    movieform.reset()
-
-})
+Cancel.addEventListener("click", ontoggle)
 
  movieform.reset()
 
